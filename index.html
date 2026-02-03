@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Verbos</title>
+    <title>Master Verbos - Pro</title>
     <style>
         :root {
             --primary: #00d2ff; --secondary: #3a7bd5;
@@ -19,18 +19,16 @@
         }
         .app-container { width: 100%; max-width: 850px; }
 
-        /* --- MANUAL DE CONSULTA --- */
+        /* --- MANUAL DE CONSULTA (EL BUENO) --- */
         .manual-container {
             background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; margin-bottom: 25px; overflow: hidden;
+            border-radius: 16px; margin-bottom: 25px; overflow: hidden; text-align: left;
         }
         summary {
             padding: 20px; cursor: pointer; font-weight: 700; color: var(--accent);
             text-align: center; list-style: none; font-size: 1.1rem;
             background: rgba(251, 191, 36, 0.05); transition: 0.3s;
         }
-        summary:hover { background: rgba(251, 191, 36, 0.1); }
-        
         .theory-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px; padding: 20px; background: #0f172a;
@@ -41,7 +39,7 @@
         }
         .theory-card h4 { margin: 0 0 10px 0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
         .theory-card p { font-size: 0.85rem; margin: 5px 0; line-height: 1.4; color: #cbd5e1; }
-        .key-tag { background: #334155; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-family: monospace; }
+        .key-tag { background: #334155; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-family: monospace; color: var(--accent); }
 
         /* --- INTERFAZ --- */
         .glass-card {
@@ -56,7 +54,6 @@
             background: #334155; padding: 10px 16px; border-radius: 10px;
             cursor: pointer; font-size: 0.85rem; transition: 0.2s; border: 1px solid transparent;
         }
-        .option:hover { border-color: var(--primary); }
         .option input { display: none; }
         .option input:checked + span { color: var(--primary); font-weight: bold; }
 
@@ -77,14 +74,14 @@
             font-size: 1rem; text-transform: uppercase;
         }
 
-        /* BOTÓN CASA */
+        /* BOTÓN HOME DISCRETO */
         .btn-home {
             position: absolute; top: 20px; left: 20px;
-            background: #334155; border: none; color: white;
-            padding: 8px 12px; border-radius: 8px; cursor: pointer;
-            font-size: 0.9rem; transition: 0.3s;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: #94a3b8; padding: 8px 15px; border-radius: 8px; cursor: pointer;
+            transition: 0.3s;
         }
-        .btn-home:hover { background: #475569; }
+        .btn-home:hover { background: var(--primary); color: #0f172a; }
 
         .feedback { margin-top: 20px; padding: 20px; border-radius: 12px; font-weight: 700; display: none; }
         .success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
@@ -98,26 +95,34 @@
         <h1>Análisis Verbal</h1>
 
         <details class="manual-container">
-            <summary>📖 MANUAL DE CONSULTA</summary>
+            <summary>📖 MANUAL DE CONSULTA (REPASAR)</summary>
             <div class="theory-grid">
                 <div class="theory-card">
                     <h4>Indicativo (Hechos)</h4>
-                    <p><b>Presente:</b> Acciones ahora <span class="key-tag">-o, -as</span></p>
+                    <p><b>Presente:</b> Ahora <span class="key-tag">-o, -as</span></p>
                     <p><b>P. Perf. Simple:</b> Pasado seco <span class="key-tag">-é, -í</span></p>
                     <p><b>P. Imperfecto:</b> Pasado continuo <span class="key-tag">-aba, -ía</span></p>
-                    <p><b>Futuro:</b> Vendrá <span class="key-tag">-ré</span></p>
+                    <p><b>Futuro:</b> Pasará <span class="key-tag">-ré</span></p>
                     <p><b>Condicional:</b> Deseo <span class="key-tag">-ría</span></p>
                 </div>
                 <div class="theory-card">
-                    <h4>Subjuntivo (Dudas)</h4>
-                    <p><b>Presente:</b> "Ojalá..." <span class="key-tag">-e, -a</span></p>
+                    <h4>Subjuntivo (Duda)</h4>
+                    <p><b>Presente:</b> "Que yo..." <span class="key-tag">-e, -a</span></p>
                     <p><b>P. Imperfecto:</b> "Si yo..." <span class="key-tag">-ra, -se</span></p>
+                    <p><b>Futuro:</b> "Si yo..." <span class="key-tag">-re</span></p>
                 </div>
                 <div class="theory-card">
-                    <h4>Otros</h4>
-                    <p><b>Perfectivo:</b> Acción terminada (Compuestos y P.P. Simple)</p>
-                    <p><b>Imperfectivo:</b> En proceso (Presente, P. Imperfecto, Futuros)</p>
-                    <p><b>Voz Pasiva:</b> Ser + Participio (Ej: Soy amado)</p>
+                    <h4>Voz y Aspecto</h4>
+                    <p><b>Voz Activa:</b> "Yo como"</p>
+                    <p><b>Voz Pasiva:</b> "Soy comido" (Ser + Participio)</p>
+                    <p><b>A. Perfectivo:</b> Acción acabada (T. Compuestos y P.P.Simple)</p>
+                    <p><b>A. Imperfectivo:</b> Sin acabar (Presente, P.Imper.)</p>
+                </div>
+                <div class="theory-card">
+                    <h4>Irregulares Clave</h4>
+                    <p><b>Caber:</b> Yo cupe, yo quepa</p>
+                    <p><b>Saber:</b> Yo supe, yo sepa</p>
+                    <p><b>Traer:</b> Yo traje, yo traiga</p>
                 </div>
             </div>
         </details>
@@ -147,11 +152,11 @@
             <span>RACHA: <b id="racha" style="color: var(--accent);">0</b></span>
         </div>
         
-        <div id="frase-txt" style="font-weight: bold; color: #94a3b8;"></div>
+        <div id="frase-txt" style="font-weight: bold; color: #94a3b8; font-size: 0.9rem; text-transform: uppercase;"></div>
         <div id="verbo-val" class="verbo-display"></div>
-        <h3 id="pregunta-h"></h3>
+        <h3 id="pregunta-h" style="margin-bottom: 20px; color: var(--primary);"></h3>
         
-        <input type="text" id="user-input" placeholder="Respuesta..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="Escribe tu respuesta..." autocomplete="off">
         <button id="btn-submit" class="btn-main" onclick="verificarRespuesta()">Comprobar</button>
         <div id="feedback" class="feedback"></div>
         <button id="btn-next" class="btn-main" onclick="siguientePregunta()" style="display:none; background: #334155; color: white;">Siguiente Verbo</button>
@@ -166,17 +171,16 @@
 
     const dbVerbos = {
         basico: [
-            {inf: "comer", conj: {"1a-singular": "como", "2a-singular": "comes", "3a-singular": "come", "1a-plural": "comemos", "2a-plural": "coméis", "3a-plural": "comen"}, t: "presente", asp: "imperfectivo", v: "activa"},
-            {inf: "vivir", conj: {"1a-singular": "vivo", "2a-singular": "vives", "3a-singular": "vive", "1a-plural": "vivimos", "2a-plural": "vivís", "3a-plural": "viven"}, t: "presente", asp: "imperfectivo", v: "activa"}
+            {inf: "cantar", conj: {"1a-singular": "canto", "2a-singular": "cantas", "3a-singular": "canta", "1a-plural": "cantamos", "2a-plural": "cantáis", "3a-plural": "cantan"}, t: "presente", asp: "imperfectivo", v: "activa"},
+            {inf: "leer", conj: {"1a-singular": "leo", "2a-singular": "lees", "3a-singular": "lee", "1a-plural": "leemos", "2a-plural": "leéis", "3a-plural": "leen"}, t: "presente", asp: "imperfectivo", v: "activa"}
         ],
         intermedio: [
-            {inf: "amar", conj: {"1a-singular": "amaba", "2a-singular": "amabas", "3a-singular": "amaba", "1a-plural": "amábamos", "2a-plural": "amabais", "3a-plural": "amaban"}, t: "pretérito imperfecto", asp: "imperfectivo", v: "activa"},
-            {inf: "temer", conj: {"1a-singular": "he temido", "2a-singular": "has temido", "3a-singular": "ha temido", "1a-plural": "hemos temido", "2a-plural": "habéis temido", "3a-plural": "han temido"}, t: "pretérito perfecto compuesto", asp: "perfectivo", v: "activa"}
+            {inf: "perder", conj: {"1a-singular": "perdería", "2a-singular": "perderías", "3a-singular": "perdería", "1a-plural": "perderíamos", "2a-plural": "perderíais", "3a-plural": "perderían"}, t: "condicional simple", asp: "imperfectivo", v: "activa"},
+            {inf: "escribir", conj: {"1a-singular": "escribí", "2a-singular": "escribiste", "3a-singular": "escribió", "1a-plural": "escribimos", "2a-plural": "escribisteis", "3a-plural": "escribieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"}
         ],
         avanzado: [
-            {inf: "hacer", conj: {"1a-singular": "hiciera", "2a-singular": "hicieras", "3a-singular": "hiciera", "1a-plural": "hiciéramos", "2a-plural": "hicierais", "3a-plural": "hicieran"}, t: "pretérito imperfecto", m: "subjuntivo", asp: "imperfectivo", v: "activa"},
-            {inf: "conducir", conj: {"1a-singular": "conduciré", "2a-singular": "conducirás", "3a-singular": "conducirá", "1a-plural": "conduciremos", "2a-plural": "conduciréis", "3a-plural": "conducirán"}, t: "futuro simple", asp: "imperfectivo", v: "activa"},
-            {inf: "decir", conj: {"1a-singular": "seré dicho", "2a-singular": "serás dicho", "3a-singular": "será dicho", "1a-plural": "seremos dichos", "2a-plural": "seréis dichos", "3a-plural": "serán dichos"}, t: "futuro simple", asp: "imperfectivo", v: "pasiva"}
+            {inf: "saber", conj: {"1a-singular": "supe", "2a-singular": "supiste", "3a-singular": "supo", "1a-plural": "supimos", "2a-plural": "supisteis", "3a-plural": "supieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
+            {inf: "romper", conj: {"1a-singular": "ha sido roto", "2a-singular": "has sido roto", "3a-singular": "ha sido roto", "1a-plural": "hemos sido rotos", "2a-plural": "habéis sido rotos", "3a-plural": "han sido rotos"}, t: "pretérito perfecto compuesto", asp: "perfectivo", v: "pasiva"}
         ]
     };
 
@@ -186,7 +190,7 @@
         const checks = document.querySelectorAll(".cat-check:checked");
         categoriasElegidas = Array.from(checks).map(c => c.value);
         dificultadActual = document.querySelector('input[name="diff"]:checked').value;
-        if (categoriasElegidas.length === 0) return alert("Selecciona categorías.");
+        if (categoriasElegidas.length === 0) return alert("Selecciona al menos una categoría.");
         document.getElementById("setup-screen").style.display = "none";
         document.getElementById("game-screen").style.display = "block";
         siguientePregunta();
@@ -195,7 +199,7 @@
     function irACasa() {
         document.getElementById("setup-screen").style.display = "block";
         document.getElementById("game-screen").style.display = "none";
-        historial = []; // Limpiar historial al volver
+        historial = [];
     }
 
     function siguientePregunta() {
@@ -216,9 +220,9 @@
         actual = { persona: s.p, numero: s.n, tiempo: v.t, modo: v.m || "indicativo", aspecto: v.asp, voz: v.v };
         catObjetivo = categoriasElegidas[Math.floor(Math.random() * categoriasElegidas.length)];
         
-        document.getElementById("frase-txt").innerText = `INFINITIVO: ${v.inf.toUpperCase()}`;
+        document.getElementById("frase-txt").innerText = `Verbo principal: ${v.inf}`;
         document.getElementById("verbo-val").innerText = v.conj[`${s.p}-${s.n}`];
-        document.getElementById("pregunta-h").innerText = `¿Cuál es el ${catObjetivo.toUpperCase()}?`;
+        document.getElementById("pregunta-h").innerText = `Indica la/el ${catObjetivo.toUpperCase()}:`;
     }
 
     function verificarRespuesta() {
@@ -228,11 +232,11 @@
         fb.style.display = "block";
         
         if (userAns === correctAns) {
-            fb.innerText = "¡Correcto!";
+            fb.innerText = "¡IMPECABLE!";
             fb.className = "feedback success";
             racha++;
         } else {
-            fb.innerText = `Incorrecto. Era: ${correctAns}`;
+            fb.innerText = `FALLASTE. La respuesta era: ${correctAns}`;
             fb.className = "feedback wrong";
             racha = 0;
         }
