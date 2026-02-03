@@ -7,105 +7,118 @@
     <style>
         :root {
             --primary: #00f2fe; --secondary: #4facfe;
-            --bg: #0b0e14; --card: #161b22;
+            --bg: #05070a; --card: #12171f;
             --text: #e6edf3; --accent: #f1c40f;
             --success: #2ecc71; --error: #e74c3c;
+            --gold: #d4af37;
         }
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
             background: var(--bg); color: var(--text);
             margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
-        .app-container { width: 100%; max-width: 600px; }
+        .app-container { width: 100%; max-width: 800px; }
         
-        /* Acordeón de teoría */
-        details {
-            background: var(--card); border-radius: 15px; margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1); overflow: hidden;
+        /* CÓDICE GRAMATICAL */
+        .codice-container {
+            background: #1a202c; border: 2px solid var(--gold); border-radius: 15px;
+            margin-bottom: 25px; overflow: hidden; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
         summary {
-            padding: 15px; cursor: pointer; font-weight: bold; color: var(--primary);
-            list-style: none; text-align: center; background: rgba(255,255,255,0.02);
+            padding: 20px; cursor: pointer; font-weight: 800; color: var(--gold);
+            text-align: center; list-style: none; font-size: 1.2rem; letter-spacing: 2px;
+            background: rgba(212, 175, 55, 0.1);
         }
-        .theory-content { padding: 15px; font-size: 0.85rem; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #30363d; padding: 8px; text-align: left; }
-        th { background: #0d1117; color: var(--accent); }
+        .theory-content { padding: 20px; max-height: 400px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { border: 1px solid #30363d; padding: 12px; text-align: left; }
+        th { background: #0d1117; color: var(--primary); position: sticky; top: 0; }
+        .row-cat { background: rgba(255,255,255,0.03); font-weight: bold; color: var(--accent); }
 
         .glass-card {
             background: var(--card); border-radius: 28px; padding: 35px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
         }
 
         h1 { 
             background: linear-gradient(90deg, var(--primary), var(--secondary)); 
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            font-size: 3rem; margin: 0 0 20px 0; font-weight: 800;
+            font-size: 3.5rem; margin: 0 0 20px 0; font-weight: 900;
         }
 
-        .section-label { color: #8b949e; font-size: 0.8rem; margin-top: 20px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
-
-        .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .section-label { color: #8b949e; font-size: 0.75rem; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+        .filter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .difficulty-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
         .option {
-            background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px;
+            background: rgba(255,255,255,0.02); padding: 12px; border-radius: 12px;
             display: flex; align-items: center; cursor: pointer; transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem;
         }
-        .option:hover { background: rgba(255,255,255,0.08); }
+        .option:hover { background: rgba(255,255,255,0.08); border-color: var(--secondary); }
         .option input { display: none; }
-        .dot { height: 12px; width: 12px; border-radius: 50%; border: 2px solid var(--secondary); margin-right: 10px; flex-shrink: 0; }
+        .dot { height: 10px; width: 10px; border-radius: 50%; border: 2px solid #444; margin-right: 10px; }
         .option input:checked + .dot { background: var(--primary); box-shadow: 0 0 10px var(--primary); border-color: var(--primary); }
 
         .verbo-display {
-            font-size: 2.2rem; font-weight: 800; color: var(--accent);
-            margin: 20px 0; padding: 25px; background: rgba(0,0,0,0.4); 
-            border-radius: 20px; border-left: 5px solid var(--accent);
+            font-size: 3rem; font-weight: 900; color: var(--accent);
+            margin: 20px 0; padding: 35px; background: #000; 
+            border-radius: 24px; border-bottom: 4px solid var(--accent);
+            text-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
         }
 
         input[type="text"] {
-            width: 100%; padding: 18px; border-radius: 15px; border: 2px solid #30363d;
-            background: #0d1117; color: white; font-size: 1.2rem; box-sizing: border-box; outline: none;
+            width: 100%; padding: 20px; border-radius: 18px; border: 2px solid #30363d;
+            background: #0d1117; color: white; font-size: 1.3rem; box-sizing: border-box; outline: none; text-align: center;
         }
 
         .btn-main {
-            width: 100%; padding: 20px; margin-top: 20px; border: none; border-radius: 18px;
+            width: 100%; padding: 22px; margin-top: 20px; border: none; border-radius: 20px;
             background: linear-gradient(45deg, var(--secondary), var(--primary));
-            color: #000; font-weight: 900; cursor: pointer; transition: 0.4s;
+            color: #000; font-weight: 900; cursor: pointer; transition: 0.4s; font-size: 1.1rem;
         }
-        .btn-main:hover { transform: scale(1.02); }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3); }
 
-        .feedback { margin-top: 15px; font-weight: bold; border-radius: 12px; padding: 18px; display: none; }
-        .success { background: rgba(46, 204, 113, 0.15); color: var(--success); border: 1px solid var(--success); }
-        .wrong { background: rgba(231, 76, 60, 0.15); color: var(--error); border: 1px solid var(--error); }
+        .feedback { margin-top: 15px; font-weight: bold; border-radius: 15px; padding: 20px; display: none; font-size: 1.1rem; }
+        .success { background: rgba(46, 204, 113, 0.2); color: var(--success); border: 1px solid var(--success); }
+        .wrong { background: rgba(231, 76, 60, 0.2); color: var(--error); border: 1px solid var(--error); }
         
-        .stat-badge { font-size: 0.8rem; color: var(--secondary); background: rgba(79, 172, 254, 0.1); padding: 5px 12px; border-radius: 20px; }
+        .stat-badge { font-size: 0.8rem; color: var(--secondary); background: rgba(79, 172, 254, 0.1); padding: 6px 15px; border-radius: 20px; border: 1px solid var(--secondary); }
     </style>
 </head>
 <body>
 
 <div class="app-container">
-    <details>
-        <summary>📖 VER CHULETA GRAMATICAL</summary>
-        <div class="theory-content">
-            <table>
-                <tr><th>Categoría</th><th>Cómo identificarla / Ejemplos</th></tr>
-                <tr><td><b>Persona</b></td><td>1ª (Yo/Nos), 2ª (Tú/Vos), 3ª (Él/Ellos)</td></tr>
-                <tr><td><b>Número</b></td><td>Singular (uno), Plural (varios)</td></tr>
-                <tr><td><b>Tiempo</b></td><td>Presente, Pretérito (pasado), Futuro</td></tr>
-                <tr><td><b>Aspecto</b></td><td><b>Perfectivo:</b> Acción terminada (fui). <br><b>Imperfectivo:</b> Acción en proceso (iba, voy).</td></tr>
-                <tr><td><b>Modo</b></td><td><b>Indicativo:</b> Realidad. <br><b>Subjuntivo:</b> Deseo/Duda.</td></tr>
-                <tr><td><b>Voz</b></td><td><b>Activa:</b> Sujeto hace (Como). <br><b>Pasiva:</b> Sujeto recibe (Soy comido).</td></tr>
-            </table>
-        </div>
-    </details>
-
     <div id="setup-screen" class="glass-card">
         <h1>Verbos</h1>
+
+        <details class="codice-container">
+            <summary>📜 EL CÓDICE GRAMATICAL</summary>
+            <div class="theory-content">
+                <table>
+                    <tr class="row-cat"><td colspan="3">MODO INDICATIVO (Realidad)</td></tr>
+                    <tr><td><b>Presente</b></td><td>Como, Vives</td><td>Acción actual</td></tr>
+                    <tr><td><b>Pret. Perf. Simple</b></td><td>Comí, Viviste</td><td>Pasado terminado</td></tr>
+                    <tr><td><b>Pret. Imperfecto</b></td><td>Comía, Vivías</td><td>Pasado habitual</td></tr>
+                    <tr><td><b>Futuro Simple</b></td><td>Comeré, Vivirás</td><td>Acción venidera</td></tr>
+                    <tr><td><b>Condicional Simple</b></td><td>Comería, Vivirías</td><td>Hipótesis</td></tr>
+                    <tr><td><b>Pret. Perf. Compuesto</b></td><td>He comido</td><td>Pasado reciente</td></tr>
+                    <tr><td><b>Pret. Pluscuamperf.</b></td><td>Había comido</td><td>Pasado de otro pasado</td></tr>
+                    
+                    <tr class="row-cat"><td colspan="3">MODO SUBJUNTIVO (Deseo/Duda)</td></tr>
+                    <tr><td><b>Presente Subj.</b></td><td>Coma, Vivas</td><td>Deseo actual</td></tr>
+                    <tr><td><b>Pret. Imperf. Subj.</b></td><td>Comiera / Comiese</td><td>Deseo pasado</td></tr>
+                    
+                    <tr class="row-cat"><td colspan="3">OTROS ATRIBUTOS</td></tr>
+                    <tr><td><b>Aspecto Perfectivo</b></td><td colspan="2">Tiempos compuestos y Pret. Perfecto Simple (Acción cerrada)</td></tr>
+                    <tr><td><b>Aspecto Imperfectivo</b></td><td colspan="2">Presente, Futuros y Pret. Imperfecto (Acción en curso)</td></tr>
+                    <tr><td><b>Voz Pasiva</b></td><td colspan="2">Sujeto recibe: "Soy amado", "Fueron vistos"</td></tr>
+                </table>
+            </div>
+        </details>
         
-        <div class="section-label">Categorías de Análisis</div>
+        <div class="section-label">Categorías a evaluar</div>
         <div class="filter-grid">
             <label class="option"><input type="checkbox" class="cat-check" value="persona" checked><span class="dot"></span> Persona</label>
             <label class="option"><input type="checkbox" class="cat-check" value="numero" checked><span class="dot"></span> Número</label>
@@ -115,62 +128,59 @@
             <label class="option"><input type="checkbox" class="cat-check" value="voz" checked><span class="dot"></span> Voz</label>
         </div>
 
-        <div class="section-label">Dificultad de Verbos</div>
+        <div class="section-label">Nivel de Desafío</div>
         <div class="difficulty-grid">
             <label class="option"><input type="radio" name="diff" value="basico" checked><span class="dot"></span> Básico</label>
-            <label class="option"><input type="radio" name="diff" value="intermedio"><span class="dot"></span> Inter</label>
-            <label class="option"><input type="radio" name="diff" value="avanzado"><span class="dot"></span> Pro</label>
+            <label class="option"><input type="radio" name="diff" value="intermedio"><span class="dot"></span> Intermedio</label>
+            <label class="option"><input type="radio" name="diff" value="avanzado"><span class="dot"></span> Avanzado</label>
         </div>
 
-        <button class="btn-main" onclick="iniciarJuego()">¡DARLE CAÑA!</button>
+        <button class="btn-main" onclick="iniciarJuego()">¡EMPEZAR EL DESAFÍO!</button>
     </div>
 
     <div id="game-screen" class="glass-card" style="display:none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <span class="stat-badge">RACHA: <span id="racha">0</span></span>
-            <span id="diff-tag" style="color: #58a6ff; font-weight: bold; font-size: 0.7rem;"></span>
+            <span id="diff-tag" style="color: var(--gold); font-weight: bold; font-size: 0.8rem; letter-spacing: 1px;"></span>
         </div>
         
-        <div id="frase-txt" style="color: #8b949e; font-size: 0.9rem;"></div>
+        <div id="frase-txt" style="color: #8b949e; font-size: 1.2rem; font-weight: bold;"></div>
         <div id="verbo-val" class="verbo-display"></div>
-        <h3 id="pregunta-h"></h3>
+        <h3 id="pregunta-h" style="color: var(--text); font-size: 1.4rem; margin-bottom: 25px;"></h3>
         
-        <input type="text" id="user-input" placeholder="Tu respuesta..." autocomplete="off">
+        <input type="text" id="user-input" placeholder="Escribe aquí..." autocomplete="off">
         
         <button id="btn-submit" class="btn-main" onclick="verificarRespuesta()">COMPROBAR</button>
         
         <div id="feedback" class="feedback"></div>
-        <button id="btn-next" class="btn-main" onclick="siguientePregunta()" style="display:none; background: #30363d; color: white;">SIGUIENTE</button>
+        <button id="btn-next" class="btn-main" onclick="siguientePregunta()" style="display:none; background: #30363d; color: white;">CONTINUAR</button>
     </div>
 </div>
 
 <script>
     const sujetos = [
-        {txt: "Yo", p: "1a", n: "singular"}, {txt: "Tú", p: "2a", n: "singular"},
-        {txt: "Él", p: "3a", n: "singular"}, {txt: "Nosotros", p: "1a", n: "plural"},
-        {txt: "Vosotros", p: "2a", n: "plural"}, {txt: "Ellos", p: "3a", n: "plural"}
+        {p: "1a", n: "singular"}, {p: "2a", n: "singular"}, {p: "3a", n: "singular"},
+        {p: "1a", n: "plural"}, {p: "2a", n: "plural"}, {p: "3a", n: "plural"}
     ];
 
     const dbVerbos = {
         basico: [
-            {inf: "hablar", conj: {"1a-singular": "hablo", "2a-singular": "hablas", "3a-singular": "habla", "1a-plural": "hablamos", "2a-plural": "habláis", "3a-plural": "hablan"}, t: "presente", asp: "imperfectivo", v: "activa"},
-            {inf: "beber", conj: {"1a-singular": "bebo", "2a-singular": "bebes", "3a-singular": "bebe", "1a-plural": "bebemos", "2a-plural": "bebéis", "3a-plural": "beben"}, t: "presente", asp: "imperfectivo", v: "activa"},
-            {inf: "vivir", conj: {"1a-singular": "vivo", "2a-singular": "vives", "3a-singular": "vive", "1a-plural": "vivimos", "2a-plural": "vivís", "3a-plural": "viven"}, t: "presente", asp: "imperfectivo", v: "activa"},
-            {inf: "cantar", conj: {"1a-singular": "canto", "2a-singular": "cantas", "3a-singular": "canta", "1a-plural": "cantamos", "2a-plural": "cantáis", "3a-plural": "cantan"}, t: "presente", asp: "imperfectivo", v: "activa"}
+            {inf: "estudiar", conj: {"1a-singular": "estudio", "2a-singular": "estudias", "3a-singular": "estudia", "1a-plural": "estudiamos", "2a-plural": "estudiáis", "3a-plural": "estudian"}, t: "presente", asp: "imperfectivo", v: "activa"},
+            {inf: "correr", conj: {"1a-singular": "corro", "2a-singular": "corres", "3a-singular": "corre", "1a-plural": "corremos", "2a-plural": "corréis", "3a-plural": "corren"}, t: "presente", asp: "imperfectivo", v: "activa"},
+            {inf: "partir", conj: {"1a-singular": "parto", "2a-singular": "partes", "3a-singular": "parte", "1a-plural": "partimos", "2a-plural": "partís", "3a-plural": "parten"}, t: "presente", asp: "imperfectivo", v: "activa"}
         ],
         intermedio: [
-            {inf: "comer", conj: {"1a-singular": "comí", "2a-singular": "comiste", "3a-singular": "comió", "1a-plural": "comimos", "2a-plural": "comisteis", "3a-plural": "comieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
-            {inf: "amar", conj: {"1a-singular": "amaba", "2a-singular": "amabas", "3a-singular": "amaba", "1a-plural": "amábamos", "2a-plural": "amabais", "3a-plural": "amaban"}, t: "pretérito imperfecto", asp: "imperfectivo", v: "activa"},
-            {inf: "saltar", conj: {"1a-singular": "saltaré", "2a-singular": "saltarás", "3a-singular": "saltará", "1a-plural": "saltaremos", "2a-plural": "saltaréis", "3a-plural": "saltarán"}, t: "futuro simple", asp: "imperfectivo", v: "activa"},
-            {inf: "leer", conj: {"1a-singular": "leía", "2a-singular": "leías", "3a-singular": "leía", "1a-plural": "leíamos", "2a-plural": "leíais", "3a-plural": "leían"}, t: "pretérito imperfecto", asp: "imperfectivo", v: "activa"}
+            {inf: "escribir", conj: {"1a-singular": "escribí", "2a-singular": "escribiste", "3a-singular": "escribió", "1a-plural": "escribimos", "2a-plural": "escribisteis", "3a-plural": "escribieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
+            {inf: "temer", conj: {"1a-singular": "temía", "2a-singular": "temías", "3a-singular": "temía", "1a-plural": "temíamos", "2a-plural": "temíais", "3a-plural": "temían"}, t: "pretérito imperfecto", asp: "imperfectivo", v: "activa"},
+            {inf: "viajar", conj: {"1a-singular": "viajaré", "2a-singular": "viajarás", "3a-singular": "viajará", "1a-plural": "viajaremos", "2a-plural": "viajaréis", "3a-plural": "viajarán"}, t: "futuro simple", asp: "imperfectivo", v: "activa"},
+            {inf: "leer", conj: {"1a-singular": "leería", "2a-singular": "leerías", "3a-singular": "leería", "1a-plural": "leeríamos", "2a-plural": "leeríais", "3a-plural": "leerían"}, t: "condicional simple", asp: "imperfectivo", v: "activa"}
         ],
         avanzado: [
-            {inf: "saber", conj: {"1a-singular": "supe", "2a-singular": "supiste", "3a-singular": "supo", "1a-plural": "supimos", "2a-plural": "supisteis", "3a-plural": "supieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
-            {inf: "ir", conj: {"1a-singular": "fui", "2a-singular": "fuiste", "3a-singular": "fue", "1a-plural": "fuimos", "2a-plural": "fuisteis", "3a-plural": "fueron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
-            {inf: "hacer", conj: {"1a-singular": "he hecho", "2a-singular": "has hecho", "3a-singular": "ha hecho", "1a-plural": "hemos hecho", "2a-plural": "habéis hecho", "3a-plural": "han hecho"}, t: "pretérito perfecto compuesto", asp: "perfectivo", v: "activa"},
-            {inf: "ser", conj: {"1a-singular": "fui amado", "2a-singular": "fuiste amado", "3a-singular": "fue amado", "1a-plural": "fuimos amados", "2a-plural": "fuisteis amados", "3a-plural": "fueron amados"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "pasiva"},
-            {inf: "traer", conj: {"1a-singular": "trajera", "2a-singular": "trajeras", "3a-singular": "trajera", "1a-plural": "trajéramos", "2a-plural": "trajerais", "3a-plural": "trajeran"}, t: "pretérito imperfecto", asp: "imperfectivo", m: "subjuntivo", v: "activa"},
-            {inf: "caber", conj: {"1a-singular": "quepo", "2a-singular": "cabes", "3a-singular": "cabe", "1a-plural": "cabemos", "2a-plural": "cabéis", "3a-plural": "caben"}, t: "presente", asp: "imperfectivo", v: "activa"}
+            {inf: "decir", conj: {"1a-singular": "dije", "2a-singular": "dijiste", "3a-singular": "dijo", "1a-plural": "dijimos", "2a-plural": "dijisteis", "3a-plural": "dijeron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
+            {inf: "conducir", conj: {"1a-singular": "condujera", "2a-singular": "condujeras", "3a-singular": "condujera", "1a-plural": "condujéramos", "2a-plural": "condujerais", "3a-plural": "condujeran"}, t: "pretérito imperfecto", m: "subjuntivo", asp: "imperfectivo", v: "activa"},
+            {inf: "satisfacer", conj: {"1a-singular": "había satisfecho", "2a-singular": "habías satisfecho", "3a-singular": "había satisfecho", "1a-plural": "habíamos satisfecho", "2a-plural": "habíais satisfecho", "3a-plural": "habían satisfecho"}, t: "pretérito pluscuamperfecto", asp: "perfectivo", v: "activa"},
+            {inf: "poner", conj: {"1a-singular": "he puesto", "2a-singular": "has puesto", "3a-singular": "ha puesto", "1a-plural": "hemos puesto", "2a-plural": "habéis puesto", "3a-plural": "han puesto"}, t: "pretérito perfecto compuesto", asp: "perfectivo", v: "activa"},
+            {inf: "ver", conj: {"1a-singular": "fui visto", "2a-singular": "fuiste visto", "3a-singular": "fue visto", "1a-plural": "fuimos vistos", "2a-plural": "fuisteis vistos", "3a-plural": "fueron vistos"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "pasiva"}
         ]
     };
 
@@ -179,15 +189,17 @@
     let actual = {};
     let catObjetivo = "";
     let racha = 0;
+    let historial = [];
 
     function iniciarJuego() {
         const checks = document.querySelectorAll(".cat-check:checked");
         categoriasElegidas = Array.from(checks).map(c => c.value);
         dificultadActual = document.querySelector('input[name="diff"]:checked').value;
-        if (categoriasElegidas.length === 0) return alert("Selecciona algo, coño.");
+        if (categoriasElegidas.length === 0) return alert("Selecciona al menos una categoría.");
+        
         document.getElementById("setup-screen").style.display = "none";
         document.getElementById("game-screen").style.display = "block";
-        document.getElementById("diff-tag").innerText = "MODO: " + dificultadActual.toUpperCase();
+        document.getElementById("diff-tag").innerText = dificultadActual.toUpperCase();
         siguientePregunta();
     }
 
@@ -198,9 +210,16 @@
         const input = document.getElementById("user-input");
         input.value = ""; input.focus();
         
-        const s = sujetos[Math.floor(Math.random() * sujetos.length)];
         const lista = dbVerbos[dificultadActual];
-        const v = lista[Math.floor(Math.random() * lista.length)];
+        
+        // Filtro para NO REPETIR
+        let disponibles = lista.filter(v => !historial.includes(v.inf));
+        if (disponibles.length === 0) { historial = []; disponibles = lista; } // Reset si se acaban
+        
+        const v = disponibles[Math.floor(Math.random() * disponibles.length)];
+        historial.push(v.inf);
+
+        const s = sujetos[Math.floor(Math.random() * sujetos.length)];
         const key = `${s.p}-${s.n}`;
         
         actual = { 
@@ -210,7 +229,7 @@
         
         catObjetivo = categoriasElegidas[Math.floor(Math.random() * categoriasElegidas.length)];
         
-        document.getElementById("frase-txt").innerText = `${s.txt} (${v.inf})...`;
+        document.getElementById("frase-txt").innerText = `INFINITIVO: ${v.inf.toUpperCase()}`;
         document.getElementById("verbo-val").innerText = v.conj[key];
         document.getElementById("pregunta-h").innerText = `¿Cuál es el ${catObjetivo.toUpperCase()}?`;
     }
@@ -222,11 +241,11 @@
         fb.style.display = "block";
         
         if (userAns === correctAns) {
-            fb.innerText = "✨ ¡CORRECTO!";
+            fb.innerText = "✨ ¡IMPECABLE!";
             fb.className = "feedback success";
             racha++;
         } else {
-            fb.innerText = `❌ INCORRECTO. Era: ${correctAns}`;
+            fb.innerText = `❌ ERROR. La respuesta era: ${correctAns}`;
             fb.className = "feedback wrong";
             racha = 0;
         }
