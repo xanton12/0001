@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analizador de Verbos</title>
+    <title>Analizador de Verbos Profesional</title>
     <style>
         body {
             font-family: sans-serif;
@@ -20,11 +20,11 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             text-align: center;
             position: relative;
         }
-        h1 { margin-top: 0; }
+        h1 { margin-top: 0; color: #4db8ff; }
         
         .btn-home {
             position: absolute;
@@ -39,7 +39,7 @@
         }
 
         .verbo-grande {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
             color: #4db8ff;
             margin: 20px 0;
@@ -48,13 +48,16 @@
             color: #aaa;
             font-style: italic;
             margin-bottom: 10px;
+            font-size: 1.2rem;
         }
         input {
             width: 80%;
             padding: 15px;
             font-size: 1.2rem;
             border-radius: 8px;
-            border: none;
+            border: 2px solid #333;
+            background: #121212;
+            color: white;
             margin: 10px 0;
         }
         button.principal {
@@ -62,7 +65,7 @@
             color: black;
             border: none;
             padding: 15px 30px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
@@ -73,6 +76,7 @@
             padding: 15px;
             border-radius: 8px;
             display: none;
+            font-size: 1.1rem;
         }
         .correcto { background-color: #1b5e20; }
         .incorrecto { background-color: #b71c1c; }
@@ -91,10 +95,10 @@
         }
         .manual-content {
             padding: 15px;
-            font-size: 0.85rem;
-            line-height: 1.4;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
         }
-        .manual-content b { color: #4db8ff; }
 
         .filtros {
             display: flex;
@@ -111,22 +115,36 @@
             font-size: 0.9rem;
         }
         .tag input { display: none; }
-        .tag.active { background: #4db8ff; color: black; }
+        .tag.active { background: #4db8ff; color: black; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="setup-screen" class="container">
-        <h1>Configurar Juego</h1>
+        <h1>Entrenamiento de Verbos</h1>
         
         <details class="manual">
-            <summary>📖 Manual Completo de Ayuda</summary>
+            <summary>📖 Manual de Consulta (Tiempos, Modos y Aspectos)</summary>
             <div class="manual-content">
-                <p><b>Indicativo (Hechos):</b> Presente (como), P. Imperfecto (comía), P. Perfecto Simple (comí), Futuro (comeré), Condicional (comería).</p>
-                <p><b>Subjuntivo (Deseo/Duda):</b> Presente (coma), P. Imperfecto (comiera/comiese).</p>
-                <p><b>Tiempos Compuestos:</b> Siempre llevan el verbo "haber" (He comido, Había comido...).</p>
-                <p><b>Voz Pasiva:</b> Verbo SER + Participio (Soy amado, Fue escrito).</p>
-                <p><b>Aspecto:</b> <i>Perfectivo</i> (acción terminada: P.P. Simple y Compuestos) e <i>Imperfectivo</i> (acción en curso: Presente, P. Imperfecto, Futuro).</p>
+                <p><b>MODOS:</b><br>
+                - <b>Indicativo:</b> Acciones reales (Ej: Yo como).<br>
+                - <b>Subjuntivo:</b> Deseos, dudas, hipótesis (Ej: Ojalá coma).<br>
+                - <b>Imperativo:</b> Órdenes (Ej: ¡Come!).</p>
+                <hr>
+                <p><b>TIEMPOS SIMPLES (Indicativo):</b><br>
+                - Presente (amo), P. Imperfecto (amaba), P. Perfecto Simple (amé), Futuro (amaré), Condicional (amaría).</p>
+                <p><b>TIEMPOS COMPUESTOS (Haber + Participio):</b><br>
+                - P. Perfecto Compuesto (he amado), P. Pluscuamperfecto (había amado), P. Anterior (hube amado), Futuro Próximo (habré amado), Condicional Compuesto (habría amado).</p>
+                <p><b>SUBJUNTIVO:</b><br>
+                - Presente (ame), P. Imperfecto (amara/amase), Futuro (amare).</p>
+                <hr>
+                <p><b>ASPECTO:</b><br>
+                - <b>Perfectivo:</b> Acción terminada (Todos los compuestos + P. Perfecto Simple).<br>
+                - <b>Imperfectivo:</b> Acción no terminada (Presente, P. Imperfecto, Futuro, Condicional).</p>
+                <hr>
+                <p><b>VOZ:</b><br>
+                - <b>Activa:</b> Yo amo.<br>
+                - <b>Pasiva:</b> Yo soy amado / Yo he sido amado (Verbo SER + Participio).</p>
             </div>
         </details>
 
@@ -141,13 +159,13 @@
         </div>
 
         <p>Dificultad:</p>
-        <div class="filtros">
+        <div class="filtros" id="dificultad-filtros">
             <label class="tag active"><input type="radio" name="dif" value="basico" checked>Básico</label>
             <label class="tag"><input type="radio" name="dif" value="intermedio">Intermedio</label>
-            <label class="tag"><input type="radio" name="dif" value="avanzado">Avanzado</label>
+            <label class="tag"><input type="radio" name="dif" value="avanzado">Avanzado (Irregulares)</label>
         </div>
 
-        <button class="principal" onclick="empezar()">EMPEZAR ENTRENAMIENTO</button>
+        <button class="principal" onclick="empezar()">EMPEZAR JUEGO</button>
     </div>
 
     <div id="game-screen" class="container" style="display:none;">
@@ -156,13 +174,13 @@
         
         <div id="infinitivo" class="info-secundaria"></div>
         <div id="palabra" class="verbo-grande"></div>
-        <div id="pregunta" style="margin-bottom: 15px; font-weight: bold; color: #aaa;"></div>
+        <div id="pregunta" style="margin-bottom: 15px; font-weight: bold;"></div>
 
-        <input type="text" id="respuesta" placeholder="Tu respuesta..." autocomplete="off">
+        <input type="text" id="respuesta" placeholder="Escribe aquí..." autocomplete="off">
         <button id="btn-comprobar" class="principal" onclick="comprobar()">COMPROBAR</button>
         
         <div id="feedback" class="feedback"></div>
-        <button id="btn-siguiente" class="principal" style="display:none; background:#555; color:white;" onclick="siguiente()">SIGUIENTE VERBO</button>
+        <button id="btn-siguiente" class="principal" style="display:none; background:#555; color:white;" onclick="siguiente()">SIGUIENTE</button>
     </div>
 
 <script>
@@ -170,22 +188,41 @@
     let actual = {};
     let categorias = [];
     let categoriaPregunta = "";
+    let usadosEnSesion = [];
 
-    const dbVerbos = {
+    const db = {
         basico: [
             { inf: "Cantar", palabra: "Canto", persona: "1a", numero: "singular", tiempo: "presente", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
-            { inf: "Comer", palabra: "Comes", persona: "2a", numero: "singular", tiempo: "presente", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" }
+            { inf: "Comer", palabra: "Comiste", persona: "2a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Vivir", palabra: "Viviremos", persona: "1a", numero: "plural", tiempo: "futuro", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Bailar", palabra: "Bailaba", persona: "1a", numero: "singular", tiempo: "pretérito imperfecto", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Beber", palabra: "Beberán", persona: "3a", numero: "plural", tiempo: "futuro", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Subir", palabra: "Subimos", persona: "1a", numero: "plural", tiempo: "presente", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Escuchar", palabra: "Escuchó", persona: "3a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" }
         ],
         intermedio: [
-            { inf: "Beber", palabra: "Bebíamos", persona: "1a", numero: "plural", tiempo: "pretérito imperfecto", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
-            { inf: "Escribir", palabra: "Escribí", persona: "1a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" }
+            { inf: "Amar", palabra: "He amado", persona: "1a", numero: "singular", tiempo: "pretérito perfecto compuesto", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Correr", palabra: "Había corrido", persona: "1a", numero: "singular", tiempo: "pretérito pluscuamperfecto", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Sentir", palabra: "Sintiera", persona: "1a", numero: "singular", tiempo: "pretérito imperfecto", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Leer", palabra: "Hubiera leído", persona: "3a", numero: "singular", tiempo: "pretérito pluscuamperfecto", modo: "subjuntivo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Escribir", palabra: "Serán escritos", persona: "3a", numero: "plural", tiempo: "futuro", modo: "indicativo", aspecto: "imperfectivo", voz: "pasiva" },
+            { inf: "Partir", palabra: "Haya partido", persona: "1a", numero: "singular", tiempo: "pretérito perfecto compuesto", modo: "subjuntivo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Ver", palabra: "Habría visto", persona: "1a", numero: "singular", tiempo: "condicional compuesto", modo: "indicativo", aspecto: "perfectivo", voz: "activa" }
         ],
         avanzado: [
-            { inf: "Amar", palabra: "Haya sido amado", persona: "1a", numero: "singular", tiempo: "pretérito perfecto compuesto", modo: "subjuntivo", aspecto: "perfectivo", voz: "pasiva" },
-            { inf: "Decir", palabra: "Dijeras", persona: "2a", numero: "singular", tiempo: "pretérito imperfecto", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" }
+            { inf: "Caber", palabra: "Cupe", persona: "1a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Saber", palabra: "Supiéramos", persona: "1a", numero: "plural", tiempo: "pretérito imperfecto", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Ir", palabra: "Vayan", persona: "3a", numero: "plural", tiempo: "presente", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Poner", palabra: "Pusieron", persona: "3a", numero: "plural", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Conducir", palabra: "Condujeres", persona: "2a", numero: "singular", tiempo: "futuro", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Traer", palabra: "Trajeras", persona: "2a", numero: "singular", tiempo: "pretérito imperfecto", modo: "subjuntivo", aspecto: "imperfectivo", voz: "activa" },
+            { inf: "Hacer", palabra: "Hube hecho", persona: "1a", numero: "singular", tiempo: "pretérito anterior", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Decir", palabra: "Hubiere dicho", persona: "3a", numero: "singular", tiempo: "futuro perfecto", modo: "subjuntivo", aspecto: "perfectivo", voz: "activa" },
+            { inf: "Satisfacer", palabra: "Satisfice", persona: "1a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "activa" }
         ]
     };
 
+    // Funciones de etiquetas
     document.querySelectorAll('.tag input').forEach(input => {
         input.addEventListener('change', function() {
             if(this.type === "radio") {
@@ -197,10 +234,11 @@
 
     function empezar() {
         categorias = Array.from(document.querySelectorAll('#filtros input:checked')).map(i => i.value);
-        if(categorias.length === 0) return alert("Selecciona al menos una categoría");
+        if(categorias.length === 0) return alert("Selecciona al menos una categoría.");
         
         document.getElementById("setup-screen").style.display = "none";
         document.getElementById("game-screen").style.display = "block";
+        usadosEnSesion = [];
         siguiente();
     }
 
@@ -219,8 +257,18 @@
         document.getElementById("respuesta").focus();
 
         const dif = document.querySelector('input[name="dif"]:checked').value;
-        const lista = dbVerbos[dif];
-        actual = lista[Math.floor(Math.random() * lista.length)];
+        let pool = db[dif];
+
+        // Filtro anti-repetición
+        let disponibles = pool.filter(v => !usadosEnSesion.includes(v.palabra));
+        if (disponibles.length === 0) {
+            usadosEnSesion = []; // Reiniciar si se acaban
+            disponibles = pool;
+        }
+
+        actual = disponibles[Math.floor(Math.random() * disponibles.length)];
+        usadosEnSesion.push(actual.palabra);
+        
         categoriaPregunta = categorias[Math.floor(Math.random() * categorias.length)];
 
         document.getElementById("infinitivo").innerText = "Infinitivo: " + actual.inf;
@@ -239,7 +287,7 @@
             f.className = "feedback correcto";
             racha++;
         } else {
-            f.innerText = "INCORRECTO. Era: " + correct;
+            f.innerText = "INCORRECTO. La respuesta era: " + correct;
             f.className = "feedback incorrecto";
             racha = 0;
         }
