@@ -3,252 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Verbos - Pro</title>
+    <title>Analizador de Verbos</title>
     <style>
-        :root {
-            --primary: #00d2ff; --secondary: #3a7bd5;
-            --bg: #0f172a; --card: #1e293b;
-            --text: #f8fafc; --accent: #fbbf24;
-            --success: #22c55e; --error: #ef4444;
-            --border: #334155;
-        }
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg); color: var(--text);
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
+            font-family: sans-serif;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
-        .app-container { width: 100%; max-width: 850px; }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        h1 { margin-top: 0; }
+        
+        /* Botón de Inicio */
+        .btn-home {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #333;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-        /* --- MANUAL DE CONSULTA (EL BUENO) --- */
-        .manual-container {
-            background: var(--card); border: 1px solid var(--border);
-            border-radius: 16px; margin-bottom: 25px; overflow: hidden; text-align: left;
+        .verbo-grande {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4db8ff;
+            margin: 20px 0;
+        }
+        .info-secundaria {
+            color: #aaa;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 80%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            border: none;
+            margin: 10px 0;
+        }
+        button.principal {
+            background-color: #4db8ff;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 80%;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        .correcto { background-color: #1b5e20; }
+        .incorrecto { background-color: #b71c1c; }
+
+        /* Estilo del Manual */
+        .manual {
+            text-align: left;
+            margin-bottom: 20px;
+            background: #252525;
+            border-radius: 8px;
         }
         summary {
-            padding: 20px; cursor: pointer; font-weight: 700; color: var(--accent);
-            text-align: center; list-style: none; font-size: 1.1rem;
-            background: rgba(251, 191, 36, 0.05); transition: 0.3s;
+            padding: 10px;
+            cursor: pointer;
+            color: #4db8ff;
+            font-weight: bold;
         }
-        .theory-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px; padding: 20px; background: #0f172a;
-        }
-        .theory-card {
-            background: #1e293b; padding: 15px; border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-        .theory-card h4 { margin: 0 0 10px 0; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-        .theory-card p { font-size: 0.85rem; margin: 5px 0; line-height: 1.4; color: #cbd5e1; }
-        .key-tag { background: #334155; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-family: monospace; color: var(--accent); }
-
-        /* --- INTERFAZ --- */
-        .glass-card {
-            background: var(--card); border-radius: 24px; padding: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid var(--border);
-            text-align: center; position: relative;
-        }
-        h1 { font-size: 2.5rem; margin-bottom: 30px; letter-spacing: -1px; font-weight: 800; }
-        
-        .filter-section { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 25px; }
-        .option {
-            background: #334155; padding: 10px 16px; border-radius: 10px;
-            cursor: pointer; font-size: 0.85rem; transition: 0.2s; border: 1px solid transparent;
-        }
-        .option input { display: none; }
-        .option input:checked + span { color: var(--primary); font-weight: bold; }
-
-        .verbo-display {
-            font-size: 3.5rem; font-weight: 900; color: var(--accent);
-            margin: 20px 0; padding: 40px; background: #020617; 
-            border-radius: 20px; border: 1px solid var(--border);
+        .manual-content {
+            padding: 15px;
+            font-size: 0.9rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
 
-        input[type="text"] {
-            width: 100%; padding: 20px; border-radius: 12px; border: 2px solid var(--border);
-            background: #0f172a; color: white; font-size: 1.4rem; text-align: center; outline: none;
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-
-        .btn-main {
-            width: 100%; padding: 20px; margin-top: 20px; border: none; border-radius: 12px;
-            background: var(--primary); color: #0f172a; font-weight: 800; cursor: pointer;
-            font-size: 1rem; text-transform: uppercase;
+        .tag {
+            background: #333;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
         }
-
-        /* BOTÓN HOME DISCRETO */
-        .btn-home {
-            position: absolute; top: 20px; left: 20px;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #94a3b8; padding: 8px 15px; border-radius: 8px; cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-home:hover { background: var(--primary); color: #0f172a; }
-
-        .feedback { margin-top: 20px; padding: 20px; border-radius: 12px; font-weight: 700; display: none; }
-        .success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
-        .wrong { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .tag input { display: none; }
+        .tag.active { background: #4db8ff; color: black; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div id="setup-screen" class="glass-card">
-        <h1>Análisis Verbal</h1>
-
-        <details class="manual-container">
-            <summary>📖 MANUAL DE CONSULTA (REPASAR)</summary>
-            <div class="theory-grid">
-                <div class="theory-card">
-                    <h4>Indicativo (Hechos)</h4>
-                    <p><b>Presente:</b> Ahora <span class="key-tag">-o, -as</span></p>
-                    <p><b>P. Perf. Simple:</b> Pasado seco <span class="key-tag">-é, -í</span></p>
-                    <p><b>P. Imperfecto:</b> Pasado continuo <span class="key-tag">-aba, -ía</span></p>
-                    <p><b>Futuro:</b> Pasará <span class="key-tag">-ré</span></p>
-                    <p><b>Condicional:</b> Deseo <span class="key-tag">-ría</span></p>
-                </div>
-                <div class="theory-card">
-                    <h4>Subjuntivo (Duda)</h4>
-                    <p><b>Presente:</b> "Que yo..." <span class="key-tag">-e, -a</span></p>
-                    <p><b>P. Imperfecto:</b> "Si yo..." <span class="key-tag">-ra, -se</span></p>
-                    <p><b>Futuro:</b> "Si yo..." <span class="key-tag">-re</span></p>
-                </div>
-                <div class="theory-card">
-                    <h4>Voz y Aspecto</h4>
-                    <p><b>Voz Activa:</b> "Yo como"</p>
-                    <p><b>Voz Pasiva:</b> "Soy comido" (Ser + Participio)</p>
-                    <p><b>A. Perfectivo:</b> Acción acabada (T. Compuestos y P.P.Simple)</p>
-                    <p><b>A. Imperfectivo:</b> Sin acabar (Presente, P.Imper.)</p>
-                </div>
-                <div class="theory-card">
-                    <h4>Irregulares Clave</h4>
-                    <p><b>Caber:</b> Yo cupe, yo quepa</p>
-                    <p><b>Saber:</b> Yo supe, yo sepa</p>
-                    <p><b>Traer:</b> Yo traje, yo traiga</p>
-                </div>
+    <div id="setup-screen" class="container">
+        <h1>Configurar Juego</h1>
+        
+        <details class="manual">
+            <summary>📖 Ver Manual de Ayuda</summary>
+            <div class="manual-content">
+                <div><strong>Tiempos:</strong> Presente, P. Imperfecto, P. Perfecto Simple, Futuro, Condicional.</div>
+                <div><strong>Modos:</strong> Indicativo, Subjuntivo, Imperativo.</div>
+                <div><strong>Aspecto:</strong> Perfectivo (acabado), Imperfectivo (en curso).</div>
+                <div><strong>Voz:</strong> Activa (yo como), Pasiva (soy comido).</div>
             </div>
         </details>
-        
-        <div class="filter-section">
-            <label class="option"><input type="checkbox" class="cat-check" value="persona" checked><span>Persona</span></label>
-            <label class="option"><input type="checkbox" class="cat-check" value="numero" checked><span>Número</span></label>
-            <label class="option"><input type="checkbox" class="cat-check" value="tiempo" checked><span>Tiempo</span></label>
-            <label class="option"><input type="checkbox" class="cat-check" value="modo" checked><span>Modo</span></label>
-            <label class="option"><input type="checkbox" class="cat-check" value="aspecto" checked><span>Aspecto</span></label>
-            <label class="option"><input type="checkbox" class="cat-check" value="voz" checked><span>Voz</span></label>
+
+        <p>Categorías a preguntar:</p>
+        <div class="filtros" id="filtros">
+            <label class="tag active"><input type="checkbox" value="persona" checked>Persona</label>
+            <label class="tag active"><input type="checkbox" value="numero" checked>Número</label>
+            <label class="tag active"><input type="checkbox" value="tiempo" checked>Tiempo</label>
+            <label class="tag active"><input type="checkbox" value="modo" checked>Modo</label>
+            <label class="tag active"><input type="checkbox" value="aspecto" checked>Aspecto</label>
         </div>
 
-        <div class="filter-section">
-            <label class="option"><input type="radio" name="diff" value="basico" checked><span>Básico</span></label>
-            <label class="option"><input type="radio" name="diff" value="intermedio"><span>Intermedio</span></label>
-            <label class="option"><input type="radio" name="diff" value="avanzado"><span>Avanzado</span></label>
+        <p>Dificultad:</p>
+        <div class="filtros">
+            <label class="tag active"><input type="radio" name="dif" value="basico" checked>Básico</label>
+            <label class="tag"><input type="radio" name="dif" value="avanzado">Avanzado</label>
         </div>
 
-        <button class="btn-main" onclick="iniciarJuego()">Iniciar Entrenamiento</button>
+        <button class="principal" onclick="empezar()">EMPEZAR</button>
     </div>
 
-    <div id="game-screen" class="glass-card" style="display:none;">
-        <button class="btn-home" onclick="irACasa()">🏠 Inicio</button>
+    <div id="game-screen" class="container" style="display:none;">
+        <button class="btn-home" onclick="volver()">🏠 Inicio</button>
+        <div style="text-align: right; color: #4db8ff;">Racha: <span id="racha">0</span></div>
         
-        <div style="display: flex; justify-content: flex-end; font-size: 0.8rem; color: #94a3b8; margin-bottom: 20px;">
-            <span>RACHA: <b id="racha" style="color: var(--accent);">0</b></span>
-        </div>
+        <div id="infinitivo" class="info-secundaria"></div>
+        <div id="palabra" class="verbo-grande"></div>
+        <div id="pregunta" style="margin-bottom: 15px; font-weight: bold;"></div>
+
+        <input type="text" id="respuesta" placeholder="Tu respuesta..." autocomplete="off">
+        <button id="btn-comprobar" class="principal" onclick="comprobar()">COMPROBAR</button>
         
-        <div id="frase-txt" style="font-weight: bold; color: #94a3b8; font-size: 0.9rem; text-transform: uppercase;"></div>
-        <div id="verbo-val" class="verbo-display"></div>
-        <h3 id="pregunta-h" style="margin-bottom: 20px; color: var(--primary);"></h3>
-        
-        <input type="text" id="user-input" placeholder="Escribe tu respuesta..." autocomplete="off">
-        <button id="btn-submit" class="btn-main" onclick="verificarRespuesta()">Comprobar</button>
         <div id="feedback" class="feedback"></div>
-        <button id="btn-next" class="btn-main" onclick="siguientePregunta()" style="display:none; background: #334155; color: white;">Siguiente Verbo</button>
+        <button id="btn-siguiente" class="principal" style="display:none; background:#555; color:white;" onclick="siguiente()">SIGUIENTE</button>
     </div>
-</div>
 
 <script>
-    const sujetos = [
-        {p: "1a", n: "singular"}, {p: "2a", n: "singular"}, {p: "3a", n: "singular"},
-        {p: "1a", n: "plural"}, {p: "2a", n: "plural"}, {p: "3a", n: "plural"}
+    let racha = 0;
+    let actual = {};
+    let categorias = [];
+    let categoriaPregunta = "";
+
+    const verbos = [
+        { inf: "Cantar", palabra: "Cantábamos", persona: "1a", numero: "plural", tiempo: "pretérito imperfecto", modo: "indicativo", aspecto: "imperfectivo", voz: "activa" },
+        { inf: "Vivir", palabra: "Hubiere vivido", persona: "1a", numero: "singular", tiempo: "futuro perfecto", modo: "subjuntivo", aspecto: "perfectivo", voz: "activa" },
+        { inf: "Comer", palabra: "He comido", persona: "1a", numero: "singular", tiempo: "pretérito perfecto compuesto", modo: "indicativo", aspecto: "perfectivo", voz: "activa" },
+        { inf: "Amar", palabra: "Fue amado", persona: "3a", numero: "singular", tiempo: "pretérito perfecto simple", modo: "indicativo", aspecto: "perfectivo", voz: "pasiva" }
     ];
 
-    const dbVerbos = {
-        basico: [
-            {inf: "cantar", conj: {"1a-singular": "canto", "2a-singular": "cantas", "3a-singular": "canta", "1a-plural": "cantamos", "2a-plural": "cantáis", "3a-plural": "cantan"}, t: "presente", asp: "imperfectivo", v: "activa"},
-            {inf: "leer", conj: {"1a-singular": "leo", "2a-singular": "lees", "3a-singular": "lee", "1a-plural": "leemos", "2a-plural": "leéis", "3a-plural": "leen"}, t: "presente", asp: "imperfectivo", v: "activa"}
-        ],
-        intermedio: [
-            {inf: "perder", conj: {"1a-singular": "perdería", "2a-singular": "perderías", "3a-singular": "perdería", "1a-plural": "perderíamos", "2a-plural": "perderíais", "3a-plural": "perderían"}, t: "condicional simple", asp: "imperfectivo", v: "activa"},
-            {inf: "escribir", conj: {"1a-singular": "escribí", "2a-singular": "escribiste", "3a-singular": "escribió", "1a-plural": "escribimos", "2a-plural": "escribisteis", "3a-plural": "escribieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"}
-        ],
-        avanzado: [
-            {inf: "saber", conj: {"1a-singular": "supe", "2a-singular": "supiste", "3a-singular": "supo", "1a-plural": "supimos", "2a-plural": "supisteis", "3a-plural": "supieron"}, t: "pretérito perfecto simple", asp: "perfectivo", v: "activa"},
-            {inf: "romper", conj: {"1a-singular": "ha sido roto", "2a-singular": "has sido roto", "3a-singular": "ha sido roto", "1a-plural": "hemos sido rotos", "2a-plural": "habéis sido rotos", "3a-plural": "han sido rotos"}, t: "pretérito perfecto compuesto", asp: "perfectivo", v: "pasiva"}
-        ]
-    };
+    // Manejo visual de etiquetas
+    document.querySelectorAll('.tag input').forEach(input => {
+        input.addEventListener('change', function() {
+            if(this.type === "radio") {
+                document.querySelectorAll('input[name="'+this.name+'"]').forEach(r => r.parentElement.classList.remove('active'));
+            }
+            this.parentElement.classList.toggle('active', this.checked);
+        });
+    });
 
-    let categoriasElegidas = [], dificultadActual = "", actual = {}, catObjetivo = "", racha = 0, historial = [];
-
-    function iniciarJuego() {
-        const checks = document.querySelectorAll(".cat-check:checked");
-        categoriasElegidas = Array.from(checks).map(c => c.value);
-        dificultadActual = document.querySelector('input[name="diff"]:checked').value;
-        if (categoriasElegidas.length === 0) return alert("Selecciona al menos una categoría.");
+    function empezar() {
+        categorias = Array.from(document.querySelectorAll('#filtros input:checked')).map(i => i.value);
+        if(categorias.length === 0) return alert("Elige al menos una categoría");
+        
         document.getElementById("setup-screen").style.display = "none";
         document.getElementById("game-screen").style.display = "block";
-        siguientePregunta();
+        siguiente();
     }
 
-    function irACasa() {
+    function volver() {
         document.getElementById("setup-screen").style.display = "block";
         document.getElementById("game-screen").style.display = "none";
-        historial = [];
     }
 
-    function siguientePregunta() {
+    function siguiente() {
         document.getElementById("feedback").style.display = "none";
-        document.getElementById("btn-next").style.display = "none";
-        document.getElementById("btn-submit").style.display = "block";
-        const input = document.getElementById("user-input");
-        input.value = ""; input.focus();
-        
-        const lista = dbVerbos[dificultadActual];
-        let disponibles = lista.filter(v => !historial.includes(v.inf + v.t + v.v));
-        if (disponibles.length === 0) { historial = []; disponibles = lista; }
-        
-        const v = disponibles[Math.floor(Math.random() * disponibles.length)];
-        historial.push(v.inf + v.t + v.v);
+        document.getElementById("btn-siguiente").style.display = "none";
+        document.getElementById("btn-comprobar").style.display = "inline-block";
+        document.getElementById("respuesta").value = "";
+        document.getElementById("respuesta").focus();
 
-        const s = sujetos[Math.floor(Math.random() * sujetos.length)];
-        actual = { persona: s.p, numero: s.n, tiempo: v.t, modo: v.m || "indicativo", aspecto: v.asp, voz: v.v };
-        catObjetivo = categoriasElegidas[Math.floor(Math.random() * categoriasElegidas.length)];
-        
-        document.getElementById("frase-txt").innerText = `Verbo principal: ${v.inf}`;
-        document.getElementById("verbo-val").innerText = v.conj[`${s.p}-${s.n}`];
-        document.getElementById("pregunta-h").innerText = `Indica la/el ${catObjetivo.toUpperCase()}:`;
+        actual = verbos[Math.floor(Math.random() * verbos.length)];
+        categoriaPregunta = categorias[Math.floor(Math.random() * categorias.length)];
+
+        document.getElementById("infinitivo").innerText = "Infinitivo: " + actual.inf;
+        document.getElementById("palabra").innerText = actual.palabra;
+        document.getElementById("pregunta").innerText = "¿Cuál es el " + categoriaPregunta.toUpperCase() + "?";
     }
 
-    function verificarRespuesta() {
-        const userAns = document.getElementById("user-input").value.toLowerCase().trim();
-        const correctAns = actual[catObjetivo].toLowerCase();
-        const fb = document.getElementById("feedback");
-        fb.style.display = "block";
+    function comprobar() {
+        let user = document.getElementById("respuesta").value.toLowerCase().trim();
+        let correct = actual[categoriaPregunta].toLowerCase();
+        let f = document.getElementById("feedback");
         
-        if (userAns === correctAns) {
-            fb.innerText = "¡IMPECABLE!";
-            fb.className = "feedback success";
+        f.style.display = "block";
+        if(user === correct) {
+            f.innerText = "¡Correcto!";
+            f.className = "feedback correcto";
             racha++;
         } else {
-            fb.innerText = `FALLASTE. La respuesta era: ${correctAns}`;
-            fb.className = "feedback wrong";
+            f.innerText = "Error. La respuesta correcta era: " + correct;
+            f.className = "feedback incorrecto";
             racha = 0;
         }
+        
         document.getElementById("racha").innerText = racha;
-        document.getElementById("btn-submit").style.display = "none";
-        document.getElementById("btn-next").style.display = "block";
+        document.getElementById("btn-comprobar").style.display = "none";
+        document.getElementById("btn-siguiente").style.display = "inline-block";
     }
 
-    document.getElementById("user-input").addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            if (document.getElementById("btn-submit").style.display !== "none") verificarRespuesta();
-            else siguientePregunta();
+    document.getElementById("respuesta").addEventListener("keypress", (e) => {
+        if(e.key === "Enter") {
+            if(document.getElementById("btn-comprobar").style.display !== "none") comprobar();
+            else siguiente();
         }
     });
 </script>
