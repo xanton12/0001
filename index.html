@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Verbos</title>
+    <title>SISTEMA DEFINITIVO DE ANÁLISIS VERBAL</title>
     <style>
         body { background: #0a0a0a; color: #fff; font-family: sans-serif; padding: 20px; text-align: center; }
         .container { max-width: 900px; margin: auto; background: #1a1a1a; padding: 30px; border-radius: 15px; border: 2px solid #333; }
         h1 { color: #00d4ff; text-transform: uppercase; letter-spacing: 2px; }
         .verb-card { background: #000; padding: 40px; border-radius: 10px; margin: 20px 0; border: 1px solid #00d4ff; }
-        .word { font-size: 4rem; font-weight: bold; margin-bottom: 10px; color: #fff; }
+        .word { font-size: 3.5rem; font-weight: bold; margin-bottom: 10px; color: #fff; }
         .hint { color: #888; margin-bottom: 30px; font-style: italic; }
         .question { font-size: 1.5rem; color: #f1c40f; margin-bottom: 20px; }
         input { width: 80%; padding: 15px; font-size: 1.2rem; border-radius: 5px; border: none; margin-bottom: 20px; text-align: center; }
@@ -39,52 +39,52 @@
 </div>
 
 <script>
+    // BANCO DE DATOS TOTAL (Todos los tiempos y modos)
     const data = [
-        // TIEMPOS SIMPLES INDICATIVO
-        {inf: "Amar", pal: "Amo", cat: "tiempo", res: "presente"},
+        // INDICATIVO SIMPLES
+        {inf: "Cantar", pal: "Canto", cat: "tiempo", res: "presente"},
         {inf: "Comer", pal: "Comía", cat: "tiempo", res: "pretérito imperfecto"},
         {inf: "Vivir", pal: "Viví", cat: "tiempo", res: "pretérito perfecto simple"},
-        {inf: "Saltar", pal: "Saltaré", cat: "tiempo", res: "futuro simple"},
-        {inf: "Dormir", pal: "Dormiría", cat: "tiempo", res: "condicional simple"},
-        // TIEMPOS COMPUESTOS INDICATIVO
-        {inf: "Cantar", pal: "He cantado", cat: "tiempo", res: "pretérito perfecto compuesto"},
-        {inf: "Beber", pal: "Había bebido", cat: "tiempo", res: "pretérito pluscuamperfecto"},
-        {inf: "Escribir", pal: "Hube escrito", cat: "tiempo", res: "pretérito anterior"},
-        {inf: "Leer", pal: "Habré leído", cat: "tiempo", res: "futuro compuesto"},
-        {inf: "Sentir", pal: "Habría sentido", cat: "tiempo", res: "condicional compuesto"},
-        // SUBJUNTIVO
-        {inf: "Partir", pal: "Parta", cat: "modo", res: "subjuntivo"},
-        {inf: "Tener", pal: "Tuviera", cat: "tiempo", res: "pretérito imperfecto"},
-        {inf: "Haber", pal: "Hubiere", cat: "tiempo", res: "futuro simple"},
-        {inf: "Hacer", pal: "Haya hecho", cat: "tiempo", res: "pretérito perfecto compuesto"},
-        {inf: "Poder", pal: "Hubiese podido", cat: "tiempo", res: "pretérito pluscuamperfecto"},
-        {inf: "Ir", pal: "Hubiere ido", cat: "tiempo", res: "futuro compuesto"},
-        // PERSONA Y NÚMERO
-        {inf: "Saber", pal: "Sabemos", cat: "persona", res: "1a"},
-        {inf: "Querer", pal: "Quieres", cat: "persona", res: "2a"},
-        {inf: "Venir", pal: "Vienen", cat: "persona", res: "3a"},
-        {inf: "Traer", pal: "Traigo", cat: "numero", res: "singular"},
-        {inf: "Andar", pal: "Anduvisteis", cat: "numero", res: "plural"},
-        // MODO Y ASPECTO
-        {inf: "Decir", pal: "¡Di!", cat: "modo", res: "imperativo"},
-        {inf: "Caber", pal: "Cabría", cat: "modo", res: "indicativo"},
-        {inf: "Ver", pal: "Vio", cat: "aspecto", res: "perfectivo"},
-        {inf: "Mirar", pal: "Miraba", cat: "aspecto", res: "imperfectivo"},
+        {inf: "Amar", pal: "Amaré", cat: "tiempo", res: "futuro simple"},
+        {inf: "Temer", pal: "Temería", cat: "tiempo", res: "condicional simple"},
+
+        // INDICATIVO COMPUESTOS
+        {inf: "Partir", pal: "He partido", cat: "tiempo", res: "pretérito perfecto compuesto"},
+        {inf: "Subir", pal: "Había subido", cat: "tiempo", res: "pretérito pluscuamperfecto"},
+        {inf: "Hacer", pal: "Hube hecho", cat: "tiempo", res: "pretérito anterior"},
+        {inf: "Decir", pal: "Habré dicho", cat: "tiempo", res: "futuro compuesto"},
+        {inf: "Poner", pal: "Habría puesto", cat: "tiempo", res: "condicional compuesto"},
+
+        // SUBJUNTIVO SIMPLES
+        {inf: "Saltar", pal: "Salte", cat: "tiempo", res: "presente"},
+        {inf: "Correr", pal: "Corriera", cat: "tiempo", res: "pretérito imperfecto"},
+        {inf: "Dormir", pal: "Durmiese", cat: "tiempo", res: "pretérito imperfecto"},
+        {inf: "Saber", pal: "Supiere", cat: "tiempo", res: "futuro simple"},
+
+        // SUBJUNTIVO COMPUESTOS
+        {inf: "Ir", pal: "Haya ido", cat: "tiempo", res: "pretérito perfecto compuesto"},
+        {inf: "Venir", pal: "Hubiera venido", cat: "tiempo", res: "pretérito pluscuamperfecto"},
+        {inf: "Traer", pal: "Hubiese traído", cat: "tiempo", res: "pretérito pluscuamperfecto"},
+        {inf: "Caber", pal: "Hubiere cabido", cat: "tiempo", res: "futuro compuesto"},
+
+        // IMPERATIVO
+        {inf: "Mirar", pal: "Mira", cat: "modo", res: "imperativo"},
+        {inf: "Escuchar", pal: "Escuchad", cat: "modo", res: "imperativo"},
+
         // FORMAS NO PERSONALES
-        {inf: "Ser", pal: "Siendo", cat: "tiempo", res: "gerundio"},
-        {inf: "Poner", pal: "Puesto", cat: "tiempo", res: "participio"},
-        {inf: "Valer", pal: "Valer", cat: "modo", res: "no personal"},
-        // MÁS VARIADOS SIN REPETIR FORMAS
-        {inf: "Conducir", pal: "Conduje", cat: "tiempo", res: "pretérito perfecto simple"},
-        {inf: "Traducir", pal: "Traducirás", cat: "tiempo", res: "futuro simple"},
-        {inf: "Traer", pal: "Trayendo", cat: "tiempo", res: "gerundio"},
-        {inf: "Caer", pal: "Caído", cat: "tiempo", res: "participio"},
-        {inf: "Oír", pal: "Oigáis", cat: "modo", res: "subjuntivo"},
-        {inf: "Salir", pal: "Sal", cat: "modo", res: "imperativo"},
-        {inf: "Reír", pal: "Rió", cat: "aspecto", res: "perfectivo"},
-        {inf: "Huir", pal: "Huyamos", cat: "persona", res: "1a"},
-        {inf: "Coser", pal: "Coserán", cat: "numero", res: "plural"},
-        {inf: "Pudrir", pal: "Podrido", cat: "tiempo", res: "participio"}
+        {inf: "Poder", pal: "Pudiendo", cat: "tiempo", res: "gerundio"},
+        {inf: "Ver", pal: "Visto", cat: "tiempo", res: "participio"},
+        {inf: "Estar", pal: "Estar", cat: "modo", res: "no personal"},
+        {inf: "Haber", pal: "Habiendo", cat: "modo", res: "no personal"},
+
+        // ACCIDENTES
+        {inf: "Sentir", pal: "Sintamos", cat: "persona", res: "1a"},
+        {inf: "Querer", pal: "Quieren", cat: "persona", res: "3a"},
+        {inf: "Oír", pal: "Oyes", cat: "persona", res: "2a"},
+        {inf: "Valer", pal: "Valemos", cat: "numero", res: "plural"},
+        {inf: "Traducir", pal: "Traduje", cat: "numero", res: "singular"},
+        {inf: "Romper", pal: "Roto", cat: "aspecto", res: "perfectivo"},
+        {inf: "Pensar", pal: "Pensaba", cat: "aspecto", res: "imperfectivo"}
     ];
 
     let current = 0;
@@ -100,6 +100,11 @@
     shuffle(data);
 
     function load() {
+        if (current >= data.length) {
+            alert("¡Has completado todo el banco de verbos!");
+            current = 0;
+            shuffle(data);
+        }
         const item = data[current];
         document.getElementById('hint').innerText = "Infinitivo: " + item.inf;
         document.getElementById('word').innerText = item.pal;
@@ -137,11 +142,6 @@
 
     function next() {
         current++;
-        if (current >= data.length) {
-            alert("Has terminado el banco de datos.");
-            current = 0;
-            shuffle(data);
-        }
         load();
     }
 
@@ -154,5 +154,6 @@
 
     load();
 </script>
+
 </body>
 </html>
