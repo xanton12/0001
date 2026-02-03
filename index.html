@@ -31,7 +31,7 @@
         <div id="question" class="question">---</div>
         <input type="text" id="ans" placeholder="Escribe tu respuesta..." autocomplete="off">
         <br>
-        <button id="btn-check" class="btn-check" onclick="check()">Verificar</button>
+        <button id="btn-check" class="btn-check" onclick="check()">Comprobar</button>
         <button id="btn-next" class="btn-next" onclick="next()">Siguiente Verbo</button>
     </div>
     
@@ -174,12 +174,12 @@
         
         f.style.display = "block";
         if (user === correct) {
-            f.innerText = "¡CORRECTO!";
+            f.innerText = "Respuesta correcta";
             f.style.background = "#00ff8822";
             f.style.color = "#00ff88";
             score += 10;
         } else {
-            f.innerText = "ERROR. La respuesta era: " + correct.toUpperCase();
+            f.innerText = "La respuesta es: " + correct.toUpperCase();
             f.style.background = "#ff313122";
             f.style.color = "#ff3131";
         }
@@ -193,7 +193,7 @@
     function next() {
         current++;
         if (current >= data.length) {
-            alert("¡Has terminado el banco de datos!");
+            alert("Has terminado el banco de datos.");
             current = 0;
             shuffle(data);
         }
