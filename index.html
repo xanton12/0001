@@ -22,7 +22,7 @@
 <body>
 
 <div class="container">
-    <h1>Analizador de Verbos Pro</h1>
+    <h1>Verbos</h1>
     <div class="score">Puntos: <span id="score">0</span></div>
 
     <div class="verb-card">
@@ -39,7 +39,6 @@
 </div>
 
 <script>
-    // BANCO DE DATOS TOTAL (Todos los tiempos y modos)
     const data = [
         // INDICATIVO SIMPLES
         {inf: "Cantar", pal: "Canto", cat: "tiempo", res: "presente"},
@@ -101,7 +100,7 @@
 
     function load() {
         if (current >= data.length) {
-            alert("¡Has completado todo el banco de verbos!");
+            alert("¡Has completado todos los verbos!");
             current = 0;
             shuffle(data);
         }
@@ -154,6 +153,5 @@
 
     load();
 </script>
-
 </body>
 </html>
